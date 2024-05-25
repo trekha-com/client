@@ -1,10 +1,10 @@
-import { Siderbar } from '@/components/ui/Sidebar';
+import { Sidebar } from '@/components/ui/sidebar';
 
 export default function DefaultLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <Siderbar />
+    <main className='h-screen'>
+      <Sidebar />
       {children}
-    </>
+    </main>
   );
 }
