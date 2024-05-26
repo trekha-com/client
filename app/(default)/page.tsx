@@ -1,15 +1,7 @@
-import { Header } from '../_components/dashboard/header';
-import { Main } from '../_components/dashboard/main';
-import { Sidebar } from '../_components/dashboard/sidebar';
-
-export default function Dashboard() {
+export default function Landing() {
   return (
-    <div className='grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]'>
-      <Sidebar />
-      <div className='flex flex-col'>
-        <Header />
-        <Main />
-      </div>
+    <div>
+      <h1>Landing page</h1>
     </div>
   );
 }
