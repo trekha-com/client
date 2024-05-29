@@ -1,7 +1,10 @@
+'use client';
+
+import { User } from '@/interfaces/user';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 interface Session {
-  // TODO Add user
+  user: User | null;
   token: string | null;
 }
 
@@ -13,21 +16,24 @@ interface SessionContextType {
 
 const SessionContext = createContext<SessionContextType | undefined>(undefined);
 
+// Constant for local storage key
+const SESSION_STORAGE_KEY = 'session';
+
 export function SessionProvider({ children }: { children: React.ReactNode }) {
-  const [session, setSessionState] = useState<Session>({ token: null });
+  const [session, setSessionState] = useState<Session>({ user: null, token: null });
 
   const setSession = (newSession: Session) => {
     setSessionState(newSession);
-    localStorage.setItem('session', JSON.stringify(newSession));
+    localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(newSession));
   };
 
   const clearSession = () => {
-    setSessionState({ token: null });
-    localStorage.removeItem('session');
+    setSessionState({ user: null, token: null });
+    localStorage.removeItem(SESSION_STORAGE_KEY);
   };
 
   useEffect(() => {
-    const storedSession = localStorage.getItem('session');
+    const storedSession = localStorage.getItem(SESSION_STORAGE_KEY);
     if (storedSession) {
       setSessionState(JSON.parse(storedSession));
     }

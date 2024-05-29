@@ -1,16 +1,27 @@
 'use client';
 
+import { useSession } from '@/contexts/session-context';
+import { User } from '@/interfaces/user';
 import axios, { AxiosError } from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useRouter } from 'next/navigation';
+
+interface LoginResponse {
+  data: {
+    message: string;
+    user: User | null;
+    token: string | null;
+  };
+}
 
 export function LoginForm() {
   const { push } = useRouter();
+  const { setSession } = useSession();
 
   const handleSubmit = async (formData: FormData) => {
     const payload = {
@@ -19,11 +30,12 @@ export function LoginForm() {
     };
 
     try {
-      const { data } = await axios.post('http://localhost:3300/api/auth/login', payload, { withCredentials: true });
+      const { data }: LoginResponse = await axios.post('http://localhost:3300/api/auth/login', payload, { withCredentials: true });
 
-      alert(JSON.stringify(data));
+      if (data.token && data.user) {
+        setSession({ user: data.user, token: data.token });
+      }
 
-      // redirect the user to /
       push('/');
     } catch (e) {
       const error = e as AxiosError;
