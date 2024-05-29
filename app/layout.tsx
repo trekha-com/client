@@ -6,7 +6,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='en'>
       <body className={GeistSans.variable}>
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          <main className='h-screen'>{children}</main>
+        </SessionProvider>
       </body>
     </html>
   );

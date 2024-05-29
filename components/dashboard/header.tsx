@@ -1,3 +1,7 @@
+'use client';
+
+import { useSession } from '@/contexts/session-context';
+
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -11,6 +15,8 @@ import { Input } from '@/components/ui/input';
 import { CircleUser, Search } from 'lucide-react';
 
 export const Header = () => {
+  const { session, clearSession } = useSession();
+
   return (
     <header className='flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6'>
       <div className='w-full flex-1'>
@@ -33,12 +39,14 @@ export const Header = () => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align='end'>
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuLabel>{session.user?.username}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className='text-destructive'>Logout</DropdownMenuItem>
+          <DropdownMenuItem className='text-destructive' onClick={clearSession}>
+            Logout
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
