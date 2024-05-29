@@ -2,7 +2,8 @@
 
 import { useSession } from '@/contexts/session-context';
 import { User } from '@/interfaces/user';
-import axios, { AxiosError } from 'axios';
+import axios from '@/lib/axios';
+import { AxiosError } from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -30,7 +31,7 @@ export function LoginForm() {
     };
 
     try {
-      const { data }: LoginResponse = await axios.post('http://localhost:3300/api/auth/login', payload);
+      const { data }: LoginResponse = await axios.post('/auth/login', payload);
 
       if (data.token && data.user) {
         setSession({ user: data.user, token: data.token });

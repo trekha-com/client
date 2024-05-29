@@ -1,15 +1,16 @@
 'use client';
 
 import { useSession } from '@/contexts/session-context';
+import { User } from '@/interfaces/user';
+import axios from '@/lib/axios';
+import { AxiosError } from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { User } from '@/interfaces/user';
-import axios, { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
 
 interface RegisterResponse {
   data: {
@@ -33,7 +34,7 @@ export function RegisterForm() {
     console.log(payload);
 
     try {
-      const { data }: RegisterResponse = await axios.post('http://localhost:3300/api/auth/register', payload);
+      const { data }: RegisterResponse = await axios.post('/auth/register', payload);
 
       if (data.token && data.user) {
         setSession({ user: data.user, token: data.token });
