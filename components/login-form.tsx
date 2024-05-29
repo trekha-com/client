@@ -30,7 +30,7 @@ export function LoginForm() {
     };
 
     try {
-      const { data }: LoginResponse = await axios.post('http://localhost:3300/api/auth/login', payload, { withCredentials: true });
+      const { data }: LoginResponse = await axios.post('http://localhost:3300/api/auth/login', payload);
 
       if (data.token && data.user) {
         setSession({ user: data.user, token: data.token });
