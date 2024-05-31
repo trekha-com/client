@@ -1,5 +1,6 @@
 'use client';
 
+import { SESSION_STORAGE_KEY } from '@/constants';
 import { User } from '@/interfaces/user';
 import { createContext, useContext, useEffect, useState } from 'react';
 
@@ -15,9 +16,6 @@ interface SessionContextType {
 }
 
 const SessionContext = createContext<SessionContextType | undefined>(undefined);
-
-// Constant for local storage key
-const SESSION_STORAGE_KEY = 'session';
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
   const [session, setSessionState] = useState<Session>({ user: null, token: null });
